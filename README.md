@@ -184,7 +184,7 @@ The receiver **must** be started **before** the sender, as the receiver creates 
 
 ### Communication Protocol
 
-![1785450547750](image/README/1785450547750.png)
+![1785450818664](image/README/1785450818664.png)
 
 ### Message Types
 
