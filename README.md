@@ -184,23 +184,7 @@ The receiver **must** be started **before** the sender, as the receiver creates 
 
 ### Communication Protocol
 
-```
-Sender                              Receiver
-  |                                    |
-  | 1. Connect to existing IPC         | 1. Create IPC objects
-  | 2. Send FILE NAME (MQ) ----------> | 2. Receive file name
-  |                                    | 3. Open output file
-  | 3. Read chunk from file            |
-  | 4. Write chunk to SHM              |
-  | 5. Send DATA_READY (MQ) ---------> | 4. Read chunk from SHM
-  |                                    | 5. Write chunk to file
-  | 6. Wait for ACK (MQ) <----------- | 6. Send ACK (MQ)
-  | 7. Loop 3-6 until EOF              | 7. Loop 4-6
-  | 8. Send DONE (size=0) (MQ) ------> | 8. Detect DONE
-  | 9. Send CRC32 checksum (MQ) -----> | 9. Receive CRC32
-  |                                    | 10. Verify CRC32
-  | 10. Cleanup (close only)           | 11. Cleanup (unlink)
-```
+![1785450547750](image/README/1785450547750.png)
 
 ### Message Types
 
@@ -273,14 +257,6 @@ On any error, IPC resources are properly cleaned up before exit.
 - Press `Ctrl+C` in either program to trigger graceful cleanup.
 - The receiver unlinks all IPC objects (shared memory and message queues) on normal exit.
 - The sender only closes its connections (receiver owns the IPC objects).
-
-## Building from Source
-
-```bash
-git clone <repository-url> posix-ipc
-cd posix-ipc
-make
-```
 
 ## Author
 
