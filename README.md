@@ -258,10 +258,12 @@ On any error, IPC resources are properly cleaned up before exit.
 - The receiver unlinks all IPC objects (shared memory and message queues) on normal exit.
 - The sender only closes its connections (receiver owns the IPC objects).
 
+
+
 ## Author
 
 **Toan Tran**
 
 ## License
 
-This project is provided under the MIT License. See `LICENSE` file for details.
+This project is provided under the [MIT License](LICENSE).
