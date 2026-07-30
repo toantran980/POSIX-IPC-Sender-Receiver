@@ -1,0 +1,33 @@
+# ===================================================================
+# POSIX IPC Sender & Receiver - .gitignore
+# ===================================================================
+
+# === Compiled Binaries ===
+send_c
+recv_c
+
+# === Object Files ===
+*.o
+*.obj
+
+# === Build Artifacts ===
+build/
+
+# === IDE / Editor Files ===
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# === Logs ===
+*.log
+
+# === Distribution ===
+*.tar.gz
+*.tar
+
+# === Backup / Temp ===
+*__recv*
