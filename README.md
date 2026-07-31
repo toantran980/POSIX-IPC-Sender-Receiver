@@ -209,8 +209,8 @@ If no custom output path is specified (`-o`), the receiver appends `__recv` befo
 
 At the end of every transfer, the sender computes a CRC32 checksum over all data sent and transmits it to the receiver. The receiver independently computes the CRC32 over all received data and compares the two values:
 
-- ✅ **MATCH** — Data integrity verified, file is intact.
-- ❌ **MISMATCH** — Corruption detected. The output file should be discarded.
+- **MATCH** — Data integrity verified, file is intact.
+- **MISMATCH** — Corruption detected. The output file should be discarded.
 
 ## Logging
 
