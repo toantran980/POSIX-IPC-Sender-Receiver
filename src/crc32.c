@@ -86,13 +86,11 @@ static const uint32_t crc32_table[256] = {
  * API Implementation
  * =================================================================== */
 
-uint32_t crc32_compute(const void *data, size_t len)
-{
+uint32_t crc32_compute(const void *data, size_t len) {
     return crc32_update(0, data, len);
 }
 
-uint32_t crc32_update(uint32_t crc, const void *data, size_t len)
-{
+uint32_t crc32_update(uint32_t crc, const void *data, size_t len) {
     const unsigned char *buf = (const unsigned char *)data;
     crc = ~crc;
 

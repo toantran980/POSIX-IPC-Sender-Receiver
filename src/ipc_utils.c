@@ -21,8 +21,7 @@
 #include <time.h>
 #include <errno.h>
 
-static int shm_open_shared(const char *name, int flags, mode_t mode)
-{
+static int shm_open_shared(const char *name, int flags, mode_t mode) {
     int fd = shm_open(name, flags, mode);
     if (fd == -1) {
         log_error("shm_open('%s'): %s", name, strerror(errno));
@@ -31,8 +30,7 @@ static int shm_open_shared(const char *name, int flags, mode_t mode)
 }
 
 static mqd_t mq_open_shared(const char *name, int flags, mode_t mode,
-                            struct mq_attr *attr)
-{
+                            struct mq_attr *attr) {
     mqd_t mqd = mq_open(name, flags, mode, attr);
     if (mqd == (mqd_t)-1) {
         log_error("mq_open('%s'): %s", name, strerror(errno));
@@ -92,8 +90,7 @@ int ipc_init_receiver(int *shm_fd_ptr, mqd_t *mq_send_ptr, mqd_t *mq_ack_ptr,
 }
 
 int ipc_init_sender(int *shm_fd_ptr, mqd_t *mq_send_ptr, mqd_t *mq_ack_ptr,
-                    void **sharedMemPtr, size_t chunk_size)
-{
+                    void **sharedMemPtr, size_t chunk_size) {
     log_info("Initializing sender (connecting to IPC)...");
 
     *shm_fd_ptr = shm_open_shared(SHM_NAME, O_RDWR, S_IRUSR | S_IWUSR);
@@ -124,8 +121,7 @@ int ipc_init_sender(int *shm_fd_ptr, mqd_t *mq_send_ptr, mqd_t *mq_ack_ptr,
 }
 
 int ipc_cleanup(int shm_fd, mqd_t mq_send_fd, mqd_t mq_ack_fd,
-                void *sharedMemPtr, size_t chunk_size)
-{
+                void *sharedMemPtr, size_t chunk_size) {
     int ret = 0;
     (void)shm_fd;
 
@@ -160,8 +156,7 @@ int ipc_cleanup(int shm_fd, mqd_t mq_send_fd, mqd_t mq_ack_fd,
 }
 
 int ipc_cleanup_client(int shm_fd, mqd_t mq_send_fd, mqd_t mq_ack_fd,
-                       void *sharedMemPtr, size_t chunk_size)
-{
+                       void *sharedMemPtr, size_t chunk_size) {
     int ret = 0;
     (void)shm_fd;
 
@@ -183,16 +178,14 @@ int ipc_cleanup_client(int shm_fd, mqd_t mq_send_fd, mqd_t mq_ack_fd,
     return ret;
 }
 
-void ipc_msleep(unsigned long ms)
-{
+void ipc_msleep(unsigned long ms) {
     struct timespec ts;
     ts.tv_sec = (time_t)(ms / 1000);
     ts.tv_nsec = (long)((ms % 1000) * 1000000L);
     nanosleep(&ts, NULL);
 }
 
-void ipc_timeout_to_timespec(unsigned int seconds, struct timespec *out_ts)
-{
+void ipc_timeout_to_timespec(unsigned int seconds, struct timespec *out_ts) {
     clock_gettime(CLOCK_REALTIME, out_ts);
     out_ts->tv_sec += (time_t)seconds;
 }

@@ -30,8 +30,7 @@ static bool g_initialized = false;
  * Level Name Mapping
  * =================================================================== */
 
-static const char *log_level_name(int level)
-{
+static const char *log_level_name(int level) {
     switch (level) {
         case LOG_LEVEL_ERROR: return "ERROR";
         case LOG_LEVEL_WARN:  return "WARN";
@@ -45,8 +44,7 @@ static const char *log_level_name(int level)
  * Public API Implementation
  * =================================================================== */
 
-int log_init(int level, const char *logFile, bool quiet)
-{
+int log_init(int level, const char *logFile, bool quiet) {
     g_log_level = level;
     g_quiet = quiet;
     g_log_file = NULL;
@@ -64,8 +62,7 @@ int log_init(int level, const char *logFile, bool quiet)
     return 0;
 }
 
-void log_shutdown(void)
-{
+void log_shutdown(void) {
     if (g_log_file != NULL) {
         fclose(g_log_file);
         g_log_file = NULL;
@@ -73,23 +70,19 @@ void log_shutdown(void)
     g_initialized = false;
 }
 
-void log_set_level(int level)
-{
+void log_set_level(int level) {
     g_log_level = level;
 }
 
-int log_get_level(void)
-{
+int log_get_level(void) {
     return g_log_level;
 }
 
-void log_set_quiet(bool quiet)
-{
+void log_set_quiet(bool quiet) {
     g_quiet = quiet;
 }
 
-void log_log(int level, const char *format, ...)
-{
+void log_log(int level, const char *format, ...) {
     if (!g_initialized) {
         /* Auto-initialize with defaults if log_log is called before log_init */
         log_init(LOG_LEVEL_INFO, NULL, false);

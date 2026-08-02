@@ -34,8 +34,7 @@ static bool g_connected = false;
 static bool g_force = false;
 static const char *g_output_path = NULL;
 
-static void handle_signal(int sig)
-{
+static void handle_signal(int sig) {
     const char *sig_name = (sig == SIGINT) ? "SIGINT" : "SIGTERM";
     log_warn("Received %s, cleaning up IPC resources...", sig_name);
     if (g_connected) {
@@ -47,8 +46,7 @@ static void handle_signal(int sig)
     _exit(128 + sig);
 }
 
-static void print_usage(const char *prog_name)
-{
+static void print_usage(const char *prog_name) {
     fprintf(stderr,
         "Usage: %s [options]\n"
         "\n"
@@ -64,13 +62,11 @@ static void print_usage(const char *prog_name)
         prog_name, DEFAULT_CHUNK_SIZE);
 }
 
-static void print_version(void)
-{
+static void print_version(void) {
     printf("receiver (POSIX IPC) v%s\n", IPC_VERSION_STRING);
 }
 
-static int recv_file_name(char *fileName, int maxSize)
-{
+static int recv_file_name(char *fileName, int maxSize) {
     log_info("Waiting for file name from sender...");
     struct fileNameMsg msg;
     ssize_t recv_len = mq_receive(g_mq_send_fd, (char *)&msg, sizeof(msg), NULL);
@@ -84,8 +80,7 @@ static int recv_file_name(char *fileName, int maxSize)
     return 0;
 }
 
-static void make_output_path(char *recvFileName, size_t maxLen, const char *origName)
-{
+static void make_output_path(char *recvFileName, size_t maxLen, const char *origName) {
     if (g_output_path != NULL) {
         snprintf(recvFileName, maxLen, "%s", g_output_path);
         return;
@@ -105,8 +100,7 @@ static void make_output_path(char *recvFileName, size_t maxLen, const char *orig
     }
 }
 
-static unsigned long long receive_file(const char *recvFileName)
-{
+static unsigned long long receive_file(const char *recvFileName) {
     if (!g_force && access(recvFileName, F_OK) == 0) {
         log_error("Output file '%s' exists. Use -f to overwrite.", recvFileName);
         return 0;
@@ -205,8 +199,7 @@ static unsigned long long receive_file(const char *recvFileName)
     return total_recv;
 }
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
     int log_level = LOG_LEVEL_INFO;
     bool quiet = false;
     const char *log_file = NULL;

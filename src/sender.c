@@ -40,8 +40,7 @@ static bool g_connected = false;
  * Signal Handler
  * =================================================================== */
 
-static void handle_signal(int sig)
-{
+static void handle_signal(int sig) {
     const char *sig_name = (sig == SIGINT) ? "SIGINT" : "SIGTERM";
     log_warn("Received %s, cleaning up...", sig_name);
 
@@ -58,8 +57,7 @@ static void handle_signal(int sig)
  * Command-Line Options
  * =================================================================== */
 
-static void print_usage(const char *prog_name)
-{
+static void print_usage(const char *prog_name) {
     fprintf(stderr,
         "Usage: %s [options] <filename>\n"
         "\n"
@@ -73,8 +71,7 @@ static void print_usage(const char *prog_name)
         prog_name, DEFAULT_CHUNK_SIZE);
 }
 
-static void print_version(void)
-{
+static void print_version(void) {
     printf("sender (POSIX IPC) v%s\n", IPC_VERSION_STRING);
 }
 
@@ -82,8 +79,7 @@ static void print_version(void)
  * File Validation
  * =================================================================== */
 
-static int validate_input_file(const char *path)
-{
+static int validate_input_file(const char *path) {
     struct stat st;
     if (stat(path, &st) == -1) {
         log_error("Cannot access '%s': %s", path, strerror(errno));
@@ -104,8 +100,7 @@ static int validate_input_file(const char *path)
  * File Name Transfer
  * =================================================================== */
 
-static int send_file_name(const char *fileName)
-{
+static int send_file_name(const char *fileName) {
     log_info("Sending file name: %s", fileName);
 
     size_t name_len = strlen(fileName);
@@ -131,8 +126,7 @@ static int send_file_name(const char *fileName)
  * File Transfer
  * =================================================================== */
 
-static unsigned long long transfer_file(const char *fileName)
-{
+static unsigned long long transfer_file(const char *fileName) {
     FILE *fp = fopen(fileName, "rb");
     if (!fp) {
         log_error("Cannot open '%s'", fileName);
@@ -223,8 +217,7 @@ static unsigned long long transfer_file(const char *fileName)
  * Main
  * =================================================================== */
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
     int log_level = LOG_LEVEL_INFO;
     bool quiet = false;
     const char *log_file = NULL;
